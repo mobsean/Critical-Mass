@@ -77,7 +77,7 @@ function mousePressed() {
 	var x = mouseX;
 	var y = mouseY;
   var pos = createVector(x, y);
-	var vel = createVector(3 * random(vMin,vMax),0);
+	var vel = createVector(3 * random(vMin,vMax),2 * random(vMin,vMax));
 	var d = random(dmin,dmax);
 	var c1 = random(0,255);
 	var c2 = random(0,255);
@@ -183,138 +183,139 @@ class Ball {
 			console.log("otherWink_Vel_oD: " + int(degrees(otherWink_Vel_oD)));
 			//var otherangleBetween = otherBall.vel.angleBetween(otherDirection);
 			//console.log("Winkel: otherangleBetween vel/dir: " + degrees(otherangleBetween));
-			var Wink_OtherDirection = otherDirection.heading();
-			console.log("Wink_OtherDirection: " + int(degrees(Wink_OtherDirection)));
-			var thisVel_Heading = this.vel.heading();
-			console.log("this.vel.heading(): " + int(degrees(this.vel.heading())));
-			console.log("otherBall.vel.heading(): " + int(degrees(otherBall.vel.heading())));
+			// console.log("this.vel.heading(): " + int(degrees(this.vel.heading())));
+			// console.log("otherBall.vel.heading(): " + int(degrees(otherBall.vel.heading())));
 			var diffBothVelHeading = this.vel.heading() - otherBall.vel.heading();
 			console.log("diffBothVelHeading: " + int(degrees(diffBothVelHeading)));
-			var Win_Vel_oB_Vel = thisVel_Heading - Wink_OtherDirection;
-			//console.log("Win_Vel_oB_Vel: " + degrees(Win_Vel_oB_Vel));
-			var otherWin_Vel_oB_Vel = otherBall.vel.heading() - Wink_OtherDirection;
-			//console.log("otherWin_Vel_oB_Vel: " + degrees(otherWin_Vel_oB_Vel));
-			var otherVelDiff = otherWink_Vel_oD - otherWin_Vel_oB_Vel;
-			//console.log("otherVelDiff: " + degrees(otherVelDiff));
+
 			this.vel.rotate(-2*thisWink_Vel_oD);
 			otherBall.vel.rotate(-2*otherWink_Vel_oD);
 
+			this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
+			otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
 
-			if(360 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 225) {
-				console.log("YEEAH3333333333");
-				this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-				console.log("-3this ändere Richtung");
-				otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-				console.log("-2other ändere Richtung");
+			if(360 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 315) {
+				console.log("1 this ändere Richtung");
+				console.log("2 other ändere Richtung");
 			}
-			if(225 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 135) {
-				this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-				console.log("-1this ändere Richtung");
-				otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-				console.log("0other ändere Richtung");
+			if(315 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 270) {
+				console.log("3 this ändere Richtung");
+				console.log("4 other ändere Richtung");
 			}
-			if(135 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 45) {
-				this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-				console.log("1this ändere Richtung");
-				otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-				console.log("2other ändere Richtung");
+			if(270 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 225) {
+				console.log("5 this ändere Richtung");
+				console.log("6 other ändere Richtung");
 			}
-			if(45 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 45) {
-				this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-				console.log("5this ändere Richtung");
-				otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-				console.log("6other ändere Richtung");
+			if(225 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 180) {
+				console.log("7 this ändere Richtung");
+				console.log("8 other ändere Richtung");
 			}
+			if(180 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 135) {
+				console.log("9 this ändere Richtung");
+				console.log("10 other ändere Richtung");
+			}
+			if(135 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 90) {
+				console.log("11 this ändere Richtung");
+				console.log("12 other ändere Richtung");
+			}
+			if(90 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 45) {
+				console.log("13 this ändere Richtung");
+				console.log("14 other ändere Richtung");
+				// debugHit = true;
+			}
+			if(45 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 0) {
+				//this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
+				console.log("15 this ändere Richtung");
+				debugHit = true;
+				//this
+				if (180 >= degrees(thisWink_Vel_oD) && degrees(thisWink_Vel_oD) > 90) {
+					this.vel.rotate(2*thisWink_Vel_oD);
+					this.vel.rotate(2*thisWink_Vel_oD);
+					console.log("15a this drehen 4x");
+					// oder drehen this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
+				}
+				if (-90 >= degrees(thisWink_Vel_oD) && degrees(thisWink_Vel_oD) > -180) {
+					this.vel.rotate(2*thisWink_Vel_oD);
+					this.vel.rotate(2*thisWink_Vel_oD);
+					console.log("15b this drehen 4x");
+				}
 
-			if(-0.1 <= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) <= 45) {
-				this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-				console.log("7this ändere Richtung");
-				//otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-				//console.log("4other ändere Richtung");
 
-			}
-
-			if(-135 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > 90) {
-			//if(degrees(diffBothVelHeading) < -135 && degrees(diffBothVelHeading) > 90) {
-				this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-				console.log("3this ändere Richtung");
+				//otherBall
 				otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-				console.log("4other ändere Richtung");
-			}
-			if(-45 <= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) < -0.1) {
-				//if()  hier noch die länge des vektors abfragen und dann entscheiden welcher ball reflektiert
-					this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-					console.log("9this ändere Richtung");
-					//otherBall.vel.rotate(-2*otherWink_Vel_oD);
+				if (315 >= degrees(otherWink_Vel_oD) && degrees(otherWink_Vel_oD) > 270) {
 					otherBall.vel.rotate(2*otherWink_Vel_oD);
-					console.log("10 otherBall drehe 2x");
-					//debugHit = true;
+					console.log("16a other drehen 2x");
+				}
+				if (270 >= degrees(otherWink_Vel_oD) && degrees(otherWink_Vel_oD) > 225) {
+					otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
+					console.log("16b other ändere Richtung");
+				}
+				if (180 >= degrees(otherWink_Vel_oD) && degrees(otherWink_Vel_oD) > 90) {
+					otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
+					console.log("16c other ändere Richtung");
+				}
+				if (-0 >= degrees(otherWink_Vel_oD) && degrees(otherWink_Vel_oD) > -90) {
+					otherBall.vel.rotate(2*otherWink_Vel_oD);
+					console.log("16d other drehen 2x");
+				}
+				if (-90 >= degrees(otherWink_Vel_oD) && degrees(otherWink_Vel_oD) > -180) {
+					otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
+					console.log("16e other ändere Richtung");
+				}
+
 			}
-			if(-360 <= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) < -45) {
-				this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-				console.log("11this ändere Richtung");
+			if(0 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > -45) {
+				// this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
+				console.log("17 this ändere Richtung");
+
 				otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-				console.log("12other ändere Richtung");
+				otherBall.vel.rotate(-2*otherWink_Vel_oD);
+				console.log("17 other drehen -2x");
+				// debugHit = true;
 			}
 
-			if(-0.1 <= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) <= -45) {
-				this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-				console.log("13this ändere Richtung");
-				//otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-				//console.log("4other ändere Richtung");
+			if(-45 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > -90) {
+				console.log("19 this ändere Richtung");
+				console.log("20 other ändere Richtung");
+			}
+			if(-90 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > -135) {
+				console.log("21 this ändere Richtung");
+				console.log("22 other ändere Richtung");
+			}
+			if(-135 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > -180) {
+				console.log("23 this ändere Richtung");
+				console.log("24 other ändere Richtung");
+			}
+			if(-180 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > -225) {
+				console.log("25 this ändere Richtung");
+				console.log("26 other ändere Richtung");
+			}
+			if(-225 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > -270) {
+				console.log("27 this ändere Richtung");
+				console.log("28 other ändere Richtung");
+			}
+			if(-270 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > -315) {
+				console.log("29 this ändere Richtung");
+				console.log("30 other ändere Richtung");
+			}
+			if(-315 >= degrees(diffBothVelHeading) && degrees(diffBothVelHeading) > -360) {
+				console.log("31 this ändere Richtung");
+				console.log("32 other ändere Richtung");
 			}
 
-						// if(degrees(Wink_Vel_oD) < 90) {
-			// 	if(degrees(Win_Vel_oB_Vel) < 90) {
-			// 		this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-			// 		console.log("1this ändere Richtung");
-			// 		} else {
-			// 		this.vel = createVector(this.vel.x, this.vel.y);
-			// 		console.log("2this Richtung bleibt");
-			// 	}
-			// } else {
-			// 	if(degrees(Win_Vel_oB_Vel) > 90) {
-			// 		this.vel = createVector((-1)*this.vel.x, (-1)*this.vel.y);
-			// 		console.log("3this ändere Richtung");
-			// 		} else {
-			// 		this.vel = createVector(this.vel.x, this.vel.y);
-			// 		console.log("4this Richtung bleibt");
-			// 	}
-			// }
-			//otherBall
-			// if(degrees(otherWink_Vel_oD) < 90) {
-			// 	if(degrees(otherWin_Vel_oB_Vel) < 90) {
-			// 		otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-			// 		console.log("1other ändere Richtung");
-			// 		} else {
-			// 		//otherBall.vel = createVector(otherBall.vel.x, otherBall.vel.y);
-			// 		console.log("2this Richtung bleibt");
-			// 	}
-			// 	} else {
-			// 	if(degrees(otherWin_Vel_oB_Vel) > 90) {
-			// 		otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-			// 		console.log("3other ändere Richtung");
-			// 		} else {
-			// 		otherBall.vel = createVector(otherBall.vel.x, otherBall.vel.y);
-			// 		console.log("4other Richtung bleibt");
-			// 	}
-			// 	if(degrees(otherWin_Vel_oB_Vel) > -45 && degrees(otherWin_Vel_oB_Vel) < 45) {
-			// 		otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-			// 		console.log("1otherBall ändere Richtung");
-			// 		} else {
-			// 		otherBall.vel = createVector(otherBall.vel.x, otherBall.vel.y);
-			// 		console.log("2otherBall Richtung bleibt");
-			// 	}
-			// } else {
-			// 	if(degrees(otherWin_Vel_oB_Vel) > -180 && degrees(otherWin_Vel_oB_Vel) < 180) {
-			//
-			// 		otherBall.vel = createVector(otherBall.vel.x, otherBall.vel.y);
-			// 		console.log("3otherBall Richtung bleibt");
-			// 	} else {
-			// 		otherBall.vel = createVector((-1)*otherBall.vel.x, (-1)*otherBall.vel.y);
-			// 		console.log("4otherBall ändere Richtung");
-			// 	}
-			// }
+			var origin = createVector(150,750);
+			var tmpVel = createVector(1,0);
+			//var tmpWinkel = this.vel.heading() - otherBall.vel.heading()
+			tmpVel.rotate(diffBothVelHeading);
+			drawArrow(origin, tmpVel, "white", 50);
+
+			var tmpVel2 = createVector(1,0);
+			tmpVel2.rotate(thisWink_Vel_oD);
+			drawArrow(origin, tmpVel2, "orange", 30);
+			var tmpVel3 = createVector(1,0);
+			tmpVel3.rotate(otherWink_Vel_oD);
+			drawArrow(origin, tmpVel3, "lime", 30);
 
 			push(); //senkrechte
 				translate(this.pos.x, this.pos.y);
@@ -342,7 +343,7 @@ class Ball {
 			otherBall.show();
 
 			console.log("--------ENDE------");
-
+			// debugHit = true;
 			if(debugHit) {
 				alert("");
 			}
