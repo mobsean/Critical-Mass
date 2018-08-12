@@ -15,7 +15,7 @@ class Ball {
     } else {
       this.stopped = false;
     }
-    this.freezeTime = 1.5*60;
+    this.freezeTime = 2.5*60;
     this.StartdisappearTime = 0;                  //is a function of this.points set in stopMoving()
     this.disappearTime = this.StartdisappearTime; //is a function of this.points set in stopMoving()
   }
@@ -143,7 +143,7 @@ class Ball {
     this.stopped = true;
     if (this.freezeTime > 0) {
       this.d = 2 * dmax;
-      this.StartdisappearTime = 60 * (log(50000/this.points)+2);
+      this.StartdisappearTime = 60 * abs(log(12000000/this.points)+4);
       this.disappearTime = this.StartdisappearTime;
     }
   }

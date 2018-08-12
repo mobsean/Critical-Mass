@@ -1,10 +1,10 @@
 var SpielfeldRand = 10;
 var balls = [];
-var AnzBalls = 75;
+var AnzBalls = 150;
 var dmin=15;
 var dmax=45;
-var vMin = -6;
-var vMax = 6;
+var vMin = 6;
+var vMax = 10;
 var globalStartVel = 0;
 var globalScore = 0;
 
@@ -16,7 +16,16 @@ function setup() {
 		var x = random(width);
 		var y = random(height);
 		// var pos = createVector(x, y);
-		var vel = createVector(random(vMin,vMax),random(vMin,vMax));
+		var m = ceil(random(-2,1));
+		var n = ceil(random(-2,1));
+		if(m==0 || m == -0 ) {
+			m+=1;
+		}
+		if(n==0 || n == -0 ) {
+			n+=1;
+		}
+		console.log(m+" - "+n);
+		var vel = createVector(m*random(vMin,vMax),n*random(vMin,vMax));
 		globalStartVel = globalStartVel + vel.mag();
 		var d = random(dmin,dmax);
 		var c1 = random(50,255);
