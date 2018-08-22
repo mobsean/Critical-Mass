@@ -1,6 +1,6 @@
 
 class Ball {
-  constructor(pos, vel, d, c, points) {
+  constructor(pos, vel, d, c, points, name) {
 		this.pos = pos;
 		this.vel = vel;
 		this.d = d;
@@ -10,6 +10,7 @@ class Ball {
 		this.filled = true;
     this.showPoint = false;
     this.points = points;
+    this.name = name;
     if(this.vel.mag() == 0) {
       this.stopped = true;
     } else {
@@ -18,6 +19,7 @@ class Ball {
     this.freezeTime = 2.5*60;
     this.StartdisappearTime = 0;                  //is a function of this.points set in stopMoving()
     this.disappearTime = this.StartdisappearTime; //is a function of this.points set in stopMoving()
+
   }
 
   update() {
@@ -28,18 +30,20 @@ class Ball {
   show() {
 		strokeWeight(0.0);
     fill(this.c);
+    //noFill();
 		ellipse(this.pos.x, this.pos.y, this.d);
     this.showPoints();
+    //this.showName();
   }
 
-  disappear(i) {
+  disappear(zaehler) {
     if(!this.isMoving()) {
       this.freezeTime = this.freezeTime - 1;
       if (this.freezeTime < 0) {
-        this.d = map(this.disappearTime, this.StartdisappearTime, 0, 2 * dmax, 0);
+        this.d = map(this.disappearTime, this.StartdisappearTime, 0, dmax, 0);
         this.disappearTime = this.disappearTime - 1;
         if(this.d < 0) {
-           balls.splice(i, 1);  //remove this.ball from array
+           balls.splice(zaehler, 1);  //remove this.ball from array    //Scope Problem?! Kann ball hier auf array balls zugreifen?
         }
       }
     }
@@ -50,6 +54,12 @@ class Ball {
   }
   getPoints() {
     return this.points;
+  }
+  getColor() {
+    return color(this.c);
+  }
+  setColor(c) {
+    this.c = c;
   }
 
   togglePoints() {
@@ -74,6 +84,18 @@ class Ball {
     }
 	}
 
+  showName() {
+      push();
+      translate(this.pos.x, this.pos.y);
+      strokeWeight(0.1);
+      stroke("white");
+      fill("white");
+      textAlign(CENTER);
+      textSize(15);
+      text(this.name, 0, 7.5);
+      pop();
+	}
+
 	swapColor(otherBall) {
     if(this.isMoving() && otherBall.isMoving()) {
       var tmpColor = this.c;
@@ -90,28 +112,28 @@ class Ball {
 			this.pos.x = width - this.d/2 - SpielfeldRand;
 			this.vel.x = this.vel.x * (-1);
       this.vel.mult(multiplier);
-      this.c = spielfeld.getColor();
+      //this.c = spielfeld.getColor();
 		}
 		//wand in -x richtung
 		if(this.pos.x-this.d/2 < SpielfeldRand) {
 			this.pos.x = this.d/2 + SpielfeldRand;
 			this.vel.x = this.vel.x * (-1);
       this.vel.mult(multiplier);
-			this.c = spielfeld.getColor();
+			//this.c = spielfeld.getColor();
 		}
 		//wand in +y richtung
 		if(this.pos.y+this.d/2 > height - SpielfeldRand) {
 			this.pos.y = height - this.d/2 - SpielfeldRand;
 			this.vel.y = this.vel.y * (-1);
       this.vel.mult(multiplier);
-			this.c = spielfeld.getColor();
+			//this.c = spielfeld.getColor();
 		}
 		//wand in -y richtung
 		if(this.pos.y-this.d/2 < SpielfeldRand) {
 			this.pos.y = this.d/2 + SpielfeldRand;
 			this.vel.y = this.vel.y * (-1);
       this.vel.mult(multiplier);
-			this.c = spielfeld.getColor();
+			//this.c = spielfeld.getColor();
 		}
     this.vel.limit(dmin*0.2);
 
@@ -142,7 +164,7 @@ class Ball {
     this.showPoint = true;
     this.stopped = true;
     if (this.freezeTime > 0) {
-      this.d = 2 * dmax;
+      this.d = dmax;
       this.StartdisappearTime = 60 * abs(log(12000000/this.points)+4);
       this.disappearTime = this.StartdisappearTime;
     }
@@ -157,14 +179,14 @@ class Ball {
 	//this.ball gegen andere bälle. this and otherBall drehen sich entsprechend
 		var abstand = dist(this.pos.x, this.pos.y, otherBall.pos.x, otherBall.pos.y);
 		if(abstand >0 && abstand <= this.d/2+otherBall.d/2) {
-			return true;
+      return true;
 		}	else {
 			return false;
 		}
 	}
 
 	decideCollision(otherBall) {
-    if(!this.stopped) {
+    if(this.isMoving()) {
       //console.log("Treffer von " + this.name + " an " + otherBall.name);
   		var otherDirection = createVector(otherBall.pos.x, otherBall.pos.y).sub(this.pos); //Vektor von this. zu otherBall.
 
@@ -234,11 +256,6 @@ class Ball {
       bFinal[0].y = cosine * bTmp[0].y + sine * bTmp[0].x;
       bFinal[1].x = cosine * bTmp[1].x - sine * bTmp[1].y;
       bFinal[1].y = cosine * bTmp[1].y + sine * bTmp[1].x;
-
-  		// otherBall.pos.x = this.pos.x + bFinal[1].x;
-      // otherBall.pos.y = this.pos.y + bFinal[1].y;
-  		//
-  		// this.pos.add(bFinal[0]);
 
   		// update velocities
       this.vel.x = cosine * vFinal[0].x - sine * vFinal[0].y;
