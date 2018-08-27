@@ -1,17 +1,23 @@
 var SpielfeldRand = 10;
+var spielfeld;
 var balls = [];
-var AnzBalls = 2000;
-var dmin=5;
-var dmax=15;
+var AnzBallsFaktor = 0.0001;
+var dmin=50;
+var dmaxFaktor=0.020;
 var vMin = 1;
 var vMax = 2;
 var globalStartVel = 0;
 var globalScore = 0;
 
+
 function setup() {
 	createCanvas(windowWidth*0.99, windowHeight*0.99);
-	spielfeld = new Playground();
+	spielfeld = new Playground(SpielfeldRand);
 	frameRate(60);
+	var canvasArea = width*height;
+	AnzBalls = Math.sqrt(canvasArea*AnzBallsFaktor);
+	dmax = Math.sqrt(canvasArea*4*PI)*dmaxFaktor;
+	dmin = 0.67*dmax;
 	for(var i = 0; i < AnzBalls; i++){
 		var x = random(width);
 		var y = random(height);
@@ -25,7 +31,6 @@ function setup() {
 			n+=1;
 		}
 		var vel = createVector(m*random(vMin,vMax),n*random(vMin,vMax));
-		//globalStartVel = globalStartVel + vel.mag();
 		let d = random(dmin,dmax);
 		let c1 = random(255);
 		let c2 = random(255);
@@ -40,10 +45,12 @@ function setup() {
 function draw() {
 	var globalVel = 0;
 	spielfeld.draw();
-
 	let boundary = new Rectangle(0, 0, width, height);
-	let qtree = new QuadTree(boundary, 100);
-
+	let kapazitaet = 1;
+	if(int(AnzBalls/10) > 1) {
+		kapazitaet = int(AnzBalls/10);
+	}
+	let qtree = new QuadTree(boundary, kapazitaet);
 	let zaehler = 0;
 	for(let ball of balls){
 		ball.update();
@@ -52,11 +59,7 @@ function draw() {
 		zaehler++;
 		let point = new Point(ball.pos.x, ball.pos.y, ball);
 		qtree.insert(point);
-
-
 	}
-//console.log(qtree);
-
 	for(let ball of balls) {
 		let range = new Circle(ball.pos.x, ball.pos.y, dmax);
 		let points = qtree.query(range);
@@ -77,33 +80,8 @@ function draw() {
 			}
 		}
 	}
-
-
-
-		// for(var x = others.length-1; x >= 0 ; x--){
-		// 	if(balls[i].touches(balls[x])) {
-
-
-
-		// 	}
-		// }
-
-	// drawGlobalScore(globalScore);
-	// drawGlobalVel(globalVel);
+	drawGlobalScore(globalScore);
 	drawFramrate();
-
-
-	//console.log("globalVel: " + globalVel);			 //indikator für spielende?
-
-	//verkleinert das spielfeld wenn die globale Geschwindigkeit im verhältnis zur anfangsgeschwindigkeit abnimmt....
-	// console.log((globalStartVel-globalVel)/globalStartVel);
-	// if((globalStartVel-globalVel)/globalStartVel > 0.1) {
-	// 	SpielfeldRand = width/10*(globalStartVel-globalVel)/globalStartVel;
-	// }
-	// if((globalStartVel-globalVel)/globalStartVel > 0.75) {
-	// 	alert("Game Over.");
-	// }
-
 }
 
 function mouseClicked() {
@@ -126,14 +104,11 @@ function mouseClicked() {
 		var c3 = random(0,255);
 		var c = color(c1,c2,c3);
 		append(balls, new Ball(pos, vel, d, c, 2, balls.length));
-		//balls[balls.length-1].stopMoving();
 	}
 }
 
 function windowResized() {														// called if the windows is resized
-	//console.log("resize!!");
   resizeCanvas(windowWidth*0.99, windowHeight*0.99);
-
 }
 
 function drawArrow(base, vec, myColor, scaling) {			// draw an arrow for a vector at a given base (vector)position
@@ -183,38 +158,4 @@ function drawFramrate() {
 	textAlign(LEFT);
 	text("FrameRate : " + int(frameRate()), 0, 50);
 	pop();
-}
-
-
-class Playground {
-	constructor() {
-		this.background = "#161618";
-		this.a = 1;
-		this.increment = 0.0040;
-		this.r = 0;
-		this.b = 0;
-		this.g = 0;
-		this.c = color(this.r, this.b, this.g);
-	}
-
-	draw() {
-		background(this.background);
-		//Spielfeld Begrenzung
-		this.a = this.a + this.increment;
-		this.r = 255 * abs(sin(this.a));
-		this.b = 255 * abs(sin(1.4*this.a));
-		this.g = 255 * abs(sin(0.25*this.a));
-
-		this.c = color(this.r, this.b, this.g);
-		stroke(this.c);
-		strokeWeight(SpielfeldRand);
-		noFill();
-		rectMode(CENTER);
-		rect(width/2, height/2, width-SpielfeldRand, height-SpielfeldRand);
-	}
-
-	getColor() {
-		return this.c;
-	}
-
 }

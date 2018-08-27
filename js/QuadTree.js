@@ -96,8 +96,7 @@ class QuadTree {
     this.capacity = capacity;
     this.points = [];
     this.divided = false;
-    this.show(this.boundary, this.points);
-
+    // this.show(this.boundary, this.points);
   }
 
   subdivide() {
@@ -115,16 +114,6 @@ class QuadTree {
     this.southeast = new QuadTree(se, this.capacity);
     let sw = new Rectangle(x - w, y + h, w, h);
     this.southwest = new QuadTree(sw, this.capacity);
-    //
-    // let ne = new Rectangle(x + w, y, w, h);
-    // this.northeast = new QuadTree(ne, this.capacity);
-    // let nw = new Rectangle(x, y, w, h);
-    // this.northwest = new QuadTree(nw, this.capacity);
-    // let se = new Rectangle(x + w, y + h, w, h);
-    // this.southeast = new QuadTree(se, this.capacity);
-    // let sw = new Rectangle(x, y + h, w, h);
-    // this.southwest = new QuadTree(sw, this.capacity);
-
 
     this.divided = true;
 
@@ -172,31 +161,31 @@ class QuadTree {
   }
 
   //debug stuff...
-  show(bound,points) {
-    strokeWeight(1.5);
-    stroke(255);
-    noFill();
-    rectMode(CENTER);
-    //rect(this.boundary.x-this.boundary.w/2, this.boundary.y-this.boundary.h/2, this.boundary.w, this.boundary.h);
-    rect(bound.x, bound.y, bound.w*2, bound.h*2);
-    //console.log(this.boundary.w/2);
-    push();
-  	translate(bound.x, bound.y);
-  	strokeWeight(0.1);
-  	stroke("white");
-  	fill("white");
-  	textSize(12);
-  	textAlign(LEFT);
-  	//text("DES : " + int(this.points.length, 0, 50);
-  	pop();
-    //console.log(points);
-    for(let i = this.points.length-1; i >= 0; i--) {
-      strokeWeight(2);
-      fill("white");
-      //console.log("dasd: "+p.points.x+" - "+p.points.y);
-      //ellipse(p.x, p.y, 300);
-    }
-  }
+  // show(bound,points) {
+  //   strokeWeight(1.5);
+  //   stroke(255);
+  //   noFill();
+  //   //rectMode(CENTER);
+  //   //rect(this.boundary.x-this.boundary.w/2, this.boundary.y-this.boundary.h/2, this.boundary.w, this.boundary.h);
+  //   rect(bound.x, bound.y, bound.w*2, bound.h*2);
+  //   //console.log(this.boundary.w/2);
+  //   push();
+  // 	translate(bound.x, bound.y);
+  // 	strokeWeight(0.1);
+  // 	stroke("white");
+  // 	fill("white");
+  // 	textSize(12);
+  // 	textAlign(LEFT);
+  // 	//text("DES : " + int(this.points.length, 0, 50);
+  // 	pop();
+  //   //console.log(points);
+  //   for(let i = this.points.length-1; i >= 0; i--) {
+  //     strokeWeight(2);
+  //     fill("white");
+  //     //console.log("dasd: "+p.points.x+" - "+p.points.y);
+  //     //ellipse(p.x, p.y, 300);
+  //   }
+  // }
 
 }
 
